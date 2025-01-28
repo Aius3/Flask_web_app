@@ -17,12 +17,12 @@ with app.app_context():
 def home():
     search_text = request.args.get("searchlaukelis")
     if search_text:
-        automobiliai = Automobilis.query.filter(Automobilis.gamintojas.ilike(f"{search_text}%"))
-        return render_template('index.html', automobiliai=automobiliai)
+        automobiliai = Automobilis.query.filter(Automobilis.gamintojas.ilike(f"{search_text}%")).all()
     else:
         automobiliai = Automobilis.query.all()
-        return render_template('index.html', automobiliai=automobiliai)
+    return render_template('index.html', automobiliai=automobiliai, search_text=search_text)
 
+    
 @app.route("/automobilis/<int:row_id>")
 def one_auto(row_id):
     automobilis = Automobilis.query.get(row_id)
@@ -39,6 +39,7 @@ def update_auto(row_id):
         return f"Automobilis su id {row_id} neegzistuoja"
 
     if request.method == "GET":
+        # Return the form with the existing data
         return render_template("update_auto_form.html", automobilis=automobilis)
 
     elif request.method == "POST":
@@ -55,7 +56,7 @@ def update_auto(row_id):
         automobilis.variklis = variklis
         automobilis.kaina = kaina
         db.session.commit()
-        return redirect(url_for("index"))  # nukreipimas į home funkcijos endpointą
+        return redirect(url_for("home"))  # nukreipimas į home funkcijos endpointą
         # return redirect(f"/automobilis/{row_id}")  # variantas nukreipimo į vieno projekto rodymą
 
 
@@ -67,7 +68,7 @@ def delete_auto(row_id):
     else:
         db.session.delete(automobilis)
         db.session.commit()
-    return redirect(url_for("index"))
+    return redirect(url_for("home"))
 
 
 @app.route("/automobilis/naujas", methods=["GET", "POST"])
@@ -85,7 +86,9 @@ def create_auto():
             new_auto = Automobilis(gamintojas=gamintojas, modelis=modelis, spalva=spalva, metai=metai, variklis=variklis, kaina=kaina,)
             db.session.add(new_auto)
             db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('home'))
+    return redirect(url_for('home'))
+
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, debug=True)
