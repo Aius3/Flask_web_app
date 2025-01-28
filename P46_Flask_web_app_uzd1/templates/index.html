@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4>Automobilių lentelė</h4>
+<form action="" method="get">
+    <p><input type="text" name="searchlaukelis"></p>
+    <p><input type="submit" value="filtruoti gamintoją"></p>
+</form>
+
+<p><a href="/automobilis/naujas">Įvesti naują automobilį</a></p>
+<table>
+    <tr>
+        <th>id</th>
+        <th>Gamintojas</th>
+        <th>Modelis</th>
+        <th>Spalva</th>
+        <th>Metai</th>
+        <th>Variklis</th>
+        <th>Kaina (EUR)</th>
+        <th>Sukūrimo data</th>
+    </tr>
+    {% for automobilis in automobiliai %}
+    <tr>
+        <td>{{ automobilis.id }}</td>
+        <td>{{ automobilis.gamintojas }}</td>
+        <td>{{ automobilis.modelis }}</td>
+        <td>{{ automobilis.spalva }}</td>
+        <td>{{ automobilis.metai }}</td>
+        <td>{{ automobilis.variklis }}</td>
+        <td>{{ automobilis.kaina }}</td>
+        <td>{{ automobilis.sukurimo_data }}</td>
+        <td><a href="/automobilis/{{ automobilis.id }}">žiūrėti</a>
+            <a href="/automobilis/redaguoti/{{ automobilis.id }}">redaguoti</a>
+            <form action="/automobilis/trynimas/{{ automobilis.id }}" method="post" style="display:inline;">
+                <input type="submit" value="trinti">
+            </form>
+        </td>
+
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4>Įveskite naują automobilį</h4>
+<form action="/automobilis/naujas" method="post">
+    <p>Automobilio gamintojas:</p>
+    <p><input type="text" name="gamintojaslaukelis"></p>
+    <p>Automobilio modelis:</p>
+    <p><input type="text" name="modelislaukelis"></p>
+    <p>Automobilio spalva:</p>
+    <p><input type="text" name="spalvalaukelis"></p>
+    <p>Automobilio metai:</p>
+    <p><input type="number" name="metailaukelis"></p>
+    <p>Automobilio variklis:</p>
+    <p><input type="text" name="variklislaukelis"></p>
+    <p>Automobilio kaina:</p>
+    <p><input type="number" name="kainalaukelis"></p>
+
+    <p><input type="submit" value="išsaugoti"></p>
+</form>
+{% endblock %}

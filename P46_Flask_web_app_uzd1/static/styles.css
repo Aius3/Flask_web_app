@@ -1,0 +1,28 @@
+body {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+table {
+    width: 80%;
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+th {
+   border: 2px solid white;
+}
+
+td {
+    border: 2px solid white;
+}
+
+
+a:link {
+  color: yellow;
+}
+
+
+a:visited {
+  color: yellow;
+}
