@@ -1,7 +1,10 @@
 from models import db, Automobilis
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, jsonify
+from serializers import AutoSchema
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # fizinės db prijungimas, configas
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///automobiliai.db'
@@ -15,12 +18,9 @@ with app.app_context():
 
 @app.route("/")
 def home():
-    all_cars = Automobilis.query.all()
-    duomenys_jsonui = []
-    for car in all_cars
-        car_dict = {
-
-        }
+    all_autos = Automobilis.query.all()
+    duomenys_jsonui = [AutoSchema.model_validate(auto).model_dump() for auto in all_autos]
+    return jsonify(duomenys_jsonui)
 
 
 if __name__ == "__main__":
